@@ -9,16 +9,16 @@ const TodoItem=({ todo })=> {
   const router = useRouter();
   
   const [name, setName] = useState(todo.name);
-  const [deadlineAt, setDeadlineAt] = useState(todo.deadlineAt ? new Date(todo.deadlineAt).toISOString().slice(0, 16) : "");
+  const [deadlineAt, setDeadlineAt] = useState(todo.deadlineAt ? toLocalDateTimeInputValue(todo.deadlineAt) : "");
   const [isEditable, setIsEditable] = useState(false);
   const [loading, setLoading] = useState(false);
 
-//   function toLocalDateTimeInputValue(utcDateString) {
-//   const date = new Date(utcDateString);
-//   const offset = date.getTimezoneOffset();
-//   const localDate = new Date(date.getTime() - offset * 60 * 1000);
-//   return localDate.toISOString().slice(0, 16);
-// }
+  function toLocalDateTimeInputValue(utcDateString) {
+  const date = new Date(utcDateString);
+  const offset = date.getTimezoneOffset();
+  const localDate = new Date(date.getTime() - offset * 60 * 1000);
+  return localDate.toISOString().slice(0, 16);
+}
   
   const DeadLineDateTime = new Date(deadlineAt).toLocaleString("en-IN", {
     timeZone: "Asia/Kolkata",

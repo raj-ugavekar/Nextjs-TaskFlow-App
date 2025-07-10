@@ -6,6 +6,7 @@ import RemainderTimeBar from "./RemainderTimeBar";
 
 export default function TodoList() {
   const [todos, setTodos] = useState([]);
+  const [loading,setLoading] = useState(true);
 
   useEffect(() => {
     const fetchTodos = async () => {
@@ -20,6 +21,8 @@ export default function TodoList() {
         }
       } catch (err) {
         return [];
+      } finally{
+        setLoading(false);
       }
     };
 
@@ -28,7 +31,8 @@ export default function TodoList() {
 
   return (
     <div className="flex flex-col gap-y-4">
-      {todos.length > 0 ? (
+      { !loading ? 
+      (todos.length > 0 ? (
         todos.map((todo) => (
           <div key={todo._id} className="w-full">
             <TodoItem todo={todo} />
@@ -39,7 +43,7 @@ export default function TodoList() {
         <div className="w-full text-center text-sm text-white/70 italic py-4">
           You have no todos yet. Start by adding one above.
         </div>
-      )}
+      )) : <div className="w-full text-center text-sm text-white/70 italic py-4">Loading Todos...</div> }
     </div>
   );
 }
