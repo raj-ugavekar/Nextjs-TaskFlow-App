@@ -7,22 +7,21 @@ import { useUserContext } from "./ContextProvider";
 
 export default function NotificationButton() {
   const [permission, setPermission] = useState("default");
-
-  const {user} = useUserContext();
-
+  const { user } = useUserContext();
   const bellRef = useRef(null);
 
   useEffect(() => {
     if (typeof window !== "undefined" && "Notification" in window) {
-      setPermission(Notification.permission);
-    }
-    if (Notification.permission === "default" && bellRef.current && user._id) {
-        bellRef.current.focus();
-        bellRef.current.scrollIntoView({ behavior: "smooth"});
+      const status = Notification.permission;
+      setPermission(status);
 
+      if (status === "default" && bellRef.current && user?._id) {
+        bellRef.current.focus();
+        bellRef.current.scrollIntoView({ behavior: "smooth" });
         toast("Click the 🔔 icon to enable task reminders");
+      }
     }
-  }, []);
+  }, [user]);
 
   const handleSubscribe = async () => {
     if (!("Notification" in window)) {
@@ -31,15 +30,13 @@ export default function NotificationButton() {
     }
 
     const result = await Notification.requestPermission();
-    if (result !== "granted") {
-      toast.error("Notification permission denied");
-      setPermission(result);
-      return;
+    setPermission(result);
+
+    if (result === "granted") {
+      await initPush();
+    } else if (result === "denied") {
+      toast.error("Notifications blocked. Enable from browser settings.");
     }
-
-    setPermission("granted");
-
-    initPush();
   };
 
   return (
