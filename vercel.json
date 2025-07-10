@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "app/api/cron/remainder/route.js": {
+      "schedule": "*/1 * * * *"
+    }
+  }
+}

@@ -13,7 +13,6 @@ export async function GET() {
   await connectDB();
 
   const now = new Date();
-  const oneHourLater = new Date(now.getTime() + 60 * 60 * 1000);
 
   const users = await User.find({ pushSubscription: { $exists: true } });
 
@@ -22,8 +21,8 @@ export async function GET() {
       userId: user._id,
       isCompleted: false,
       deadlineAt: {
-        $gte: now,
-        $lte: oneHourLater,
+        $gte: new Date(now.getTime() - 1000 * 60 * 1),
+        $lte: new Date(now.getTime() + 1000 * 60 * 31)
       }
     });
 
@@ -48,5 +47,5 @@ export async function GET() {
     }
   }
 
-  return Response.json({ success: true, message: "Reminders sent." });
+  return Response.json({ success: true, message: "Reminders sent." , timestamp: now.toISOString()});
 }
