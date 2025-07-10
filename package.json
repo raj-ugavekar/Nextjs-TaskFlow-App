@@ -9,15 +9,22 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cookie": "^1.0.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.16.1",
+    "next": "15.3.5",
+    "node-fetch": "^3.3.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "next": "15.3.5"
+    "react-hot-toast": "^2.5.2",
+    "web-push": "^3.6.7"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.3.5",
-    "@eslint/eslintrc": "^3"
+    "tailwindcss": "^4"
   }
 }
