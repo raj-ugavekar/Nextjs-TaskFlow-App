@@ -3,9 +3,12 @@
 import { initPush } from "@/lib/features/initPushNotifications";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { useUserContext } from "./ContextProvider";
 
 export default function NotificationButton() {
   const [permission, setPermission] = useState("default");
+
+  const {user} = useUserContext();
 
   const bellRef = useRef(null);
 
@@ -13,7 +16,7 @@ export default function NotificationButton() {
     if (typeof window !== "undefined" && "Notification" in window) {
       setPermission(Notification.permission);
     }
-    if (Notification.permission === "default" && bellRef.current) {
+    if (Notification.permission === "default" && bellRef.current && user._id) {
         bellRef.current.focus();
         bellRef.current.scrollIntoView({ behavior: "smooth"});
 
