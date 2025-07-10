@@ -20,12 +20,15 @@ const TodoForm =()=> {
 
     if (!name.trim() || !deadlineAt.trim()) return toast.error("Please fill both the fields");
 
+    const localDate = new Date(deadlineAt);
+    const deadline = localDate.toISOString();
+
     const toastId = toast.loading("Creating Todo...");
     setLoading(true);
       try {
         const res = await fetch("/api/todos",{
           method:"POST",
-          body:JSON.stringify({name,deadlineAt}),
+          body:JSON.stringify({name,deadlineAt:deadline}),
           headers:{
             "Content-Type":"application/json"
           }

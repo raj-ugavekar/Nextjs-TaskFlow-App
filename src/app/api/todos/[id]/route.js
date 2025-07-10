@@ -34,9 +34,8 @@ export async function PUT(request,{params}){
         const user = await checkAuth();
 
         if(!user) return NextResponse.json({ message: "Login First" , success: false , status: 401 });
-        console.log(name,deadlineAt);
+
         const updated = await Todos.findOneAndUpdate({ _id: id, userId: user._id },{ name, deadlineAt },{ new: true });
-        console.log(updated);
 
         if (!updated) return NextResponse.json({message: "Todo not found",success: false,status: 404});
 

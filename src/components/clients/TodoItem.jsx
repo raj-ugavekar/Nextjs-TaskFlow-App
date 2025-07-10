@@ -9,16 +9,16 @@ const TodoItem=({ todo })=> {
   const router = useRouter();
   
   const [name, setName] = useState(todo.name);
-  const [deadlineAt, setDeadlineAt] = useState(todo.deadlineAt ? new Date(todo.deadlineAt).toISOString().slice(0, 16) : "");
+  const [deadlineAt, setDeadlineAt] = useState(todo.deadlineAt ? toLocalDateTimeInputValue(todo.deadlineAt) : "");
   const [isEditable, setIsEditable] = useState(false);
   const [loading, setLoading] = useState(false);
 
-//   function toLocalDateTimeInputValue(utcDateString) {
-//   const date = new Date(utcDateString);
-//   const offset = date.getTimezoneOffset();
-//   const localDate = new Date(date.getTime() - offset * 60 * 1000);
-//   return localDate.toISOString().slice(0, 16);
-// }
+  function toLocalDateTimeInputValue(utcDateString) {
+  const date = new Date(utcDateString);
+  const offset = date.getTimezoneOffset();
+  const localDate = new Date(date.getTime() - offset * 60 * 1000);
+  return localDate.toISOString().slice(0, 16);
+}
   
   const DeadLineDateTime = new Date(deadlineAt).toLocaleString("en-IN", {
     timeZone: "Asia/Kolkata",
@@ -36,12 +36,15 @@ const TodoItem=({ todo })=> {
 
       if (!name.trim() || !deadlineAt.trim()) return toast.error("Please fill both the fields");
 
+      const localDate = new Date(deadlineAt);
+      const deadline = localDate.toISOString();
+
       const toastId = toast.loading("Updating Todo...");
       setLoading(true);
 
       const res = await fetch(`/api/todos/${id}`,{
         method:"PUT",
-        body:JSON.stringify({name,deadlineAt}),
+        body:JSON.stringify({name,deadlineAt:deadline}),
         headers:{
           "Content-Type":"application/json"
         }

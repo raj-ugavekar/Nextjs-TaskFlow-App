@@ -9,11 +9,8 @@ export default function RemainderTimeBar({ deadline, isCompleted }) {
   useEffect(() => {
     function updateTime() {
       const now = new Date();
-      const due = new Date(deadline).toISOString().slice(0, 16);
+      const due = new Date(deadline);
       const diffMs = due - now;
-
-      console.log("Now Time:"+now);
-      console.log("due Time:"+due);
 
       if (diffMs <= 0) {
         setTimeLeft("Expired");

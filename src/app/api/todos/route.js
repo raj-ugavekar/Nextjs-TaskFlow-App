@@ -24,10 +24,7 @@ export async function POST(request,{params}){
 
         const {name,deadlineAt} = await request.json();
 
-        console.log(deadlineAt);
-
         if (!name || !deadlineAt) return NextResponse.json({ message: "Please fill all fields",success: false,status: 400});
-
         
         await connectDB();
         
@@ -35,9 +32,8 @@ export async function POST(request,{params}){
         
         if(!user) return NextResponse.json({ message: "Login First" , success: false , status: 401 });
 
-        console.log(name,deadlineAt);
         const data = await Todos.create({name,deadlineAt,userId:user._id});
-        console.log(data);
+
         if(!data) return NextResponse.json({ message: "Failed to create Todo" , success: false , status: 404 });
         return NextResponse.json({ message: "Todo Created Succesfully" , success: true , status: 201  });
 
