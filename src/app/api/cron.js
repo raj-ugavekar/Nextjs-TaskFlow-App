@@ -9,11 +9,10 @@ webpush.setVapidDetails(
   process.env.NEXT_PUBLIC_VAPID_PRIVATE_KEY
 );
 
-export async function GET() {
+export default async function handler(req, res) {
   await connectDB();
 
   const now = new Date();
-
   const users = await User.find({ pushSubscription: { $exists: true } });
 
   for (const user of users) {
@@ -47,5 +46,5 @@ export async function GET() {
     }
   }
 
-  return Response.json({ success: true, message: "Reminders sent." , timestamp: now.toISOString()});
+  return res.status(200).json({ success: true, message: "Reminders sent", timestamp: now.toISOString() });
 }

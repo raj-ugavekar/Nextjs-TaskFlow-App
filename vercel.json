@@ -1,6 +1,6 @@
 {
   "functions": {
-    "app/api/cron/remainder/route.js": {
+    "api/cron.js": {
       "schedule": "*/1 * * * *"
     }
   }
