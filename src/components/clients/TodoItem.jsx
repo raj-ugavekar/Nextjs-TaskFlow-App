@@ -9,7 +9,7 @@ const TodoItem=({ todo })=> {
   const router = useRouter();
   
   const [name, setName] = useState(todo.name);
-  const [deadlineAt, setDeadlineAt] = useState(todo.deadlineAt ? new Date(deadlineAt).toISOString.slice(0, 16) : "");
+  const [deadlineAt, setDeadlineAt] = useState(todo.deadlineAt ? new Date(deadlineAt).toISOString().slice(0, 16) : "");
   const [isEditable, setIsEditable] = useState(false);
   const [loading, setLoading] = useState(false);
 
