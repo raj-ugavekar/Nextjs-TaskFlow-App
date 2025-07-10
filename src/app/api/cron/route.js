@@ -2,6 +2,7 @@ import { connectDB } from "@/lib/features/serverFeatures";
 import { User } from "@/lib/models/user";
 import { Task } from "@/lib/models/task";
 import webpush from "web-push";
+import { NextResponse } from "next/server";
 
 webpush.setVapidDetails(
   process.env.NEXT_PUBLIC_VAPID_EMAIL,
@@ -9,10 +10,11 @@ webpush.setVapidDetails(
   process.env.NEXT_PUBLIC_VAPID_PRIVATE_KEY
 );
 
-export default async function handler(req, res) {
+export async function GET() {
   await connectDB();
 
   const now = new Date();
+
   const users = await User.find({ pushSubscription: { $exists: true } });
 
   for (const user of users) {
@@ -34,7 +36,7 @@ export default async function handler(req, res) {
 
         const payload = JSON.stringify({
           title: "⏰ Todo Reminder",
-          body: `Task "${task.name}" is due ${timeLabel}.`
+          body: Task `"${task.name}" is due ${timeLabel}`
         });
 
         try {
@@ -46,5 +48,5 @@ export default async function handler(req, res) {
     }
   }
 
-  return res.status(200).json({ success: true, message: "Reminders sent", timestamp: now.toISOString() });
-}
+  return NextResponse.json({ success: true, message: "Reminders sent." , timestamp: now.toISOString()});
+} 
