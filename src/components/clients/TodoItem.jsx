@@ -13,6 +13,8 @@ const TodoItem=({ todo })=> {
   const [isEditable, setIsEditable] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  console.log(todo.deadlineAt);
+
   function toLocalDateTimeInputValue(utcDateString) {
   const date = new Date(utcDateString);
   const offset = date.getTimezoneOffset();

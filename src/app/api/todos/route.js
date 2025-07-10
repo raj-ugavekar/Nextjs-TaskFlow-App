@@ -28,10 +28,11 @@ export async function POST(request,{params}){
 
         if (!name || !deadlineAt) return NextResponse.json({ message: "Please fill all fields",success: false,status: 400});
 
+        
         await connectDB();
-
+        
         const user = await checkAuth();
-
+        
         if(!user) return NextResponse.json({ message: "Login First" , success: false , status: 401 });
         
         const data = await Todos.create({name,deadlineAt,userId:user._id});
