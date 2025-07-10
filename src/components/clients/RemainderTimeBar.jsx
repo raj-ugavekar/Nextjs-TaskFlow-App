@@ -12,6 +12,9 @@ export default function RemainderTimeBar({ deadline, isCompleted }) {
       const due = new Date(deadline);
       const diffMs = due - now;
 
+      console.log("Now Time:"+now);
+      console.log("due Time:"+due);
+
       if (diffMs <= 0) {
         setTimeLeft("Expired");
         return;
