@@ -34,9 +34,10 @@ export async function POST(request,{params}){
         const user = await checkAuth();
         
         if(!user) return NextResponse.json({ message: "Login First" , success: false , status: 401 });
-        
-        const data = await Todos.create({name,deadlineAt,userId:user._id});
 
+        console.log(name,deadlineAt);
+        const data = await Todos.create({name,deadlineAt,userId:user._id});
+        console.log(data);
         if(!data) return NextResponse.json({ message: "Failed to create Todo" , success: false , status: 404 });
         return NextResponse.json({ message: "Todo Created Succesfully" , success: true , status: 201  });
 
