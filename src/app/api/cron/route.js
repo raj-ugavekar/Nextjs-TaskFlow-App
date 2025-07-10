@@ -1,8 +1,8 @@
 import { connectDB } from "@/lib/features/serverFeatures";
 import { User } from "@/lib/models/user";
-import { Task } from "@/lib/models/todos";
 import webpush from "web-push";
 import { NextResponse } from "next/server";
+import { Todos } from "@/lib/models/todos";
 
 webpush.setVapidDetails(
   process.env.NEXT_PUBLIC_VAPID_EMAIL,
@@ -18,7 +18,7 @@ export async function GET() {
   const users = await User.find({ pushSubscription: { $exists: true } });
 
   for (const user of users) {
-    const tasks = await Task.find({
+    const todos = await Todos.find({
       userId: user._id,
       isCompleted: false,
       deadlineAt: {
@@ -27,8 +27,8 @@ export async function GET() {
       }
     });
 
-    for (const task of tasks) {
-      const deadline = new Date(task.deadlineAt);
+    for (const todo of todos) {
+      const deadline = new Date(todo.deadlineAt);
       const diffMins = Math.floor((deadline - now) / 60000);
 
       if ([30, 10, 0].includes(diffMins)) {
@@ -36,7 +36,7 @@ export async function GET() {
 
         const payload = JSON.stringify({
           title: "⏰ Todo Reminder",
-          body: Task `"${task.name}" is due ${timeLabel}`
+          body: `Todo "${todo.name}" is due ${timeLabel}`
         });
 
         try {
