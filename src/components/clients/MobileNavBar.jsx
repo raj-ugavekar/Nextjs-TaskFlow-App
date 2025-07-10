@@ -21,7 +21,7 @@ export default function MobileNav() {
     <>
     <div className="md:hidden flex gap-4 justify-center items-center">
       <div >
-      <NotificationButton/>
+      {isLoggedIn && <div><NotificationButton/></div> }
       </div>
       <button
         onClick={() => setIsOpen(!isOpen)}
