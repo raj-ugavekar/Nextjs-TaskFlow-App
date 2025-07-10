@@ -1,6 +1,6 @@
 import { connectDB } from "@/lib/features/serverFeatures";
 import { User } from "@/lib/models/user";
-import { Task } from "@/lib/models/task";
+import { Task } from "@/lib/models/todos";
 import webpush from "web-push";
 import { NextResponse } from "next/server";
 
