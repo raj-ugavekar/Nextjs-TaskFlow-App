@@ -9,7 +9,7 @@ export default function RemainderTimeBar({ deadline, isCompleted }) {
   useEffect(() => {
     function updateTime() {
       const now = new Date();
-      const due = new Date(todo.deadlineAt).toISOString().slice(0, 16);
+      const due = new Date(deadline).toISOString().slice(0, 16);
       const diffMs = due - now;
 
       console.log("Now Time:"+now);
