@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import TodoForm from "../clients/TodoForm";
-import TodoList from "../clients/TodoList";
+import TodoList from "./TodoList";
 
 const TodoContainer =async()=>{
 
