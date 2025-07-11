@@ -1,13 +1,11 @@
 "use client";
 
 import { initPush } from "@/lib/features/initPushNotifications";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
-import { useUserContext } from "./ContextProvider";
 
 export default function NotificationButton() {
   const [permission, setPermission] = useState("default");
-  const { user } = useUserContext();
 
   const handleSubscribe = async () => {
     if (!("Notification" in window)) {
@@ -27,7 +25,6 @@ export default function NotificationButton() {
 
   return (
     <button
-      ref={bellRef}
       onClick={handleSubscribe}
       disabled={permission === "granted"}
       className={` transition ${
