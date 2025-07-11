@@ -36,7 +36,8 @@ export async function GET() {
 
         const payload = JSON.stringify({
           title: "⏰ Todo Reminder",
-          body: `Todo "${todo.name}" is due ${timeLabel}`
+          body: `Todo "${todo.name}" is due ${timeLabel}`,
+          tag: `todo-${task._id}`,
         });
 
         try {

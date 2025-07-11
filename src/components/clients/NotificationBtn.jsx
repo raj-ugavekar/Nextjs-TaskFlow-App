@@ -8,20 +8,6 @@ import { useUserContext } from "./ContextProvider";
 export default function NotificationButton() {
   const [permission, setPermission] = useState("default");
   const { user } = useUserContext();
-  const bellRef = useRef(null);
-
-  useEffect(() => {
-    if (typeof window !== "undefined" && "Notification" in window) {
-      const status = Notification.permission;
-      setPermission(status);
-
-      if (status === "default" && bellRef.current && user?._id) {
-        bellRef.current.focus();
-        bellRef.current.scrollIntoView({ behavior: "smooth" });
-        toast("Click the 🔔 icon to enable task reminders");
-      }
-    }
-  }, [user]);
 
   const handleSubscribe = async () => {
     if (!("Notification" in window)) {
