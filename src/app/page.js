@@ -5,7 +5,7 @@ export default function HomePage() {
     <main className="min-h-screen flex flex-col items-center px-4 bg-[#172842] text-white text-center">
 
       <div className="flex flex-col justify-center items-center mt-16">
-        <img src="logo_icon.svg" className="size-10 md:size-16" alt="" />
+        <img src="logo_icon.svg" className="size-10 md:size-16 mb-2" alt="" />
         <h1 className="text-3xl md:text-5xl font-bold mb-4">Welcome to TaskFlow</h1>
         <p className="text-base md:text-xl text-white/80 mb-8 max-w-xl">
           Organize your tasks effortlessly. Choose between quick todos or a full Kanban workflow.
