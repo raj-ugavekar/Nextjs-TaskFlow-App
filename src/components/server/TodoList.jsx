@@ -7,7 +7,7 @@ export async function getTasks() {
     const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value;
 
-    const res = await fetch(`${process.env.URL}/api/todos`, {
+    const res = await fetch(`/api/todos`, {
       headers: {
         Cookie: `token=${token}`
       },
