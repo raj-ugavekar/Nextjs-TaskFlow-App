@@ -66,7 +66,9 @@ const TodoItem=({ todo })=> {
       })
       router.refresh();
     } catch (error) {
-      return toast.error(error.message);
+        toast.error(error.message,{
+          id:toastId
+        });
     } finally {
       setLoading(false);
     }
@@ -97,7 +99,9 @@ const TodoItem=({ todo })=> {
 
         router.refresh();
       } catch (error) {  
-        return toast.error(error.message);
+        toast.error(error.message,{
+          id:toastId
+        });
       } finally {
       setLoading(false);
       }
@@ -138,7 +142,9 @@ const TodoItem=({ todo })=> {
 
       router.refresh();
     } catch (error) {
-      return toast.error(error.message);
+      return toast.error(error.message,{
+          id:toastId
+        });
     } finally {
       setLoading(false);
       }

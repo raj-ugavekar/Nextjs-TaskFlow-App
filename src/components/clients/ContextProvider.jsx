@@ -1,6 +1,5 @@
 "use client";
 
-import { initPush } from "@/lib/features/initPushNotifications";
 import { createContext,  useContext, useEffect, useState } from "react"
 import { Toaster } from "react-hot-toast";
 

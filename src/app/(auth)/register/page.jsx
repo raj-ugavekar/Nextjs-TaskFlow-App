@@ -55,7 +55,9 @@ export default function RegisterPage() {
             initPush();
             router.replace("/");
         } catch (error) {
-            return toast.error(error.message);
+            return toast.error(error.message,{
+              id:toastId
+            });
         } finally {
           setLoading(false);
         }

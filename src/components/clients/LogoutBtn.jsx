@@ -12,22 +12,31 @@ export const LogoutBtn=({className})=> {
   const {user,setUser} = useUserContext();
 
   const logoutHandler = async() => {
+        const toastId = toast.loading("Logging Out...");
     try {
         const res = await fetch("/api/auth/logout");
 
-        if(!res.ok) return toast.success(res.statusText);
+        if(!res.ok) return toast.success(res.statusText,{
+          id:toastId
+        });
 
         const data = await res.json();
 
-        if(!data.success) return toast.success(data.message);
-        toast.success(data.message);
+        if(!data.success) return toast.success(data.message,{
+          id:toastId
+        });
+        toast.success(data.message,{
+          id:toastId
+        });
 
         setUser({});
         
         router.replace("/login");
 
     } catch (error) {
-        return toast.success(error.message);
+        return toast.success(error.message,{
+          id:toastId
+        });
     }
   }
 

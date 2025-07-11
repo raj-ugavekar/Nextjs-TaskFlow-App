@@ -51,7 +51,9 @@ const TodoForm =()=> {
         })
         router.refresh();
       } catch (error) {
-        return toast.error(error.message);
+        return toast.error(error.message,{
+              id:toastId
+        });
       } finally {
         setLoading(false);
       }
