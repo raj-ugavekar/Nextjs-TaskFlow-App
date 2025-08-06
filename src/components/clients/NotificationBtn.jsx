@@ -4,12 +4,12 @@ import { initPush } from "@/lib/features/initPushNotifications";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useEffect, useRef } from "react";
-import { useUserContext } from "./ContextProvider";
+import { useSelector } from "react-redux";
 
 export default function NotificationButton() {
   const [permission, setPermission] = useState("default");
 
-  const { user } = useUserContext();
+  const user = useSelector((state)=> state.auth.user);
   const [showHint, setShowHint] = useState(false);
   const bellRef = useRef(null);
 

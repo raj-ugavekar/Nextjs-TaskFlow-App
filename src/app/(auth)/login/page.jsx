@@ -1,11 +1,12 @@
 "use client";
 
-import { useUserContext } from "@/components/clients/ContextProvider";
 import { initPush } from "@/lib/features/initPushNotifications";
+import { setUser } from "@/lib/store/authSlice";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
 
 export default function LoginPage() {
 
@@ -13,7 +14,7 @@ export default function LoginPage() {
     const [password,setPassword] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const {user,setUser} = useUserContext();
+    const disptach = useDispatch();
 
     const router = useRouter();
 
@@ -50,7 +51,7 @@ export default function LoginPage() {
             toast.success(data.message,{
               id:toastId
             })
-            setUser(data.user);
+            disptach(setUser(data.user));
             initPush();
             router.replace("/");
         } catch (error) {

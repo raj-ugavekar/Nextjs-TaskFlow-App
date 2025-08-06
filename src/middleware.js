@@ -26,7 +26,7 @@ export function middleware(request) {
     }
   }
 
-  if (pathname === "/" || pathname.startsWith("/todos")) {
+  if (pathname === "/" || pathname.startsWith("/todos") || pathname.startsWith("/task-board")) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 

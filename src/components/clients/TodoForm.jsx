@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useUserContext } from "./ContextProvider";
 
 const TodoForm =()=> {
   const [name, setName] = useState("");
@@ -12,8 +11,6 @@ const TodoForm =()=> {
   const [loading, setLoading] = useState(false);
   
   const router = useRouter();
-
-  const {user} = useUserContext();
 
   const  onAddClicked = async(e) => {
     e.preventDefault();

@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 export default function HomePage() {
+  console.log("Homme Page");
   return (
     <main className="min-h-screen flex flex-col items-center px-4 bg-[#172842] text-white text-center">
 

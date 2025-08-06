@@ -7,9 +7,13 @@ export async function connectDB(){
 
     if (mongoose.connections[0].readyState) return;
 
-    const {connection} = await mongoose.connect(process.env.MONGO_DB_URL,{
-        dbName:"TodoNext"
-    });
+    try {
+      const {connection} = await mongoose.connect(process.env.MONGO_DB_URL,{
+          dbName:"TodoNext"
+      });
+    } catch (error) {
+      console.log(error);
+    }
 
     console.log("Connected To MongoDB");
 }

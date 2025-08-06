@@ -1,5 +1,4 @@
-import DesktopNav from "../clients/DesktopNavBar";
-import MobileNav from "../clients/MobileNavBar";
+import { DesktopNav, MobileNav } from "../clients/Navbar";
 
 export const Header = () => {
   return (

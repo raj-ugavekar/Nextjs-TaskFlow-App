@@ -35,7 +35,7 @@ export async function POST(request,{params}){
         const data = await Todos.create({name,deadlineAt,userId:user._id});
 
         if(!data) return NextResponse.json({ message: "Failed to create Todo" , success: false , status: 404 });
-        return NextResponse.json({ message: "Todo Created Succesfully" , success: true , status: 201  });
+        return NextResponse.json({ taskBoard: data , message: "Todo Created Succesfully" , success: true , status: 201  });
 
     } catch (error) {
          return NextResponse.json({ message:error.message, success: false , status: 500 });

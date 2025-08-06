@@ -1,18 +1,8 @@
-import Header from "@/components/server/Header";
 import "./globals.css";
-
-import { Geist, Geist_Mono } from "next/font/google";
-import { ContextProvider } from "@/components/clients/ContextProvider";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import Header from "@/components/server/Header";
+import ReduxProvider from "@/components/clients/Provider";
+import AuthInitializer from "@/components/clients/AuthInitializer";
+import { Toaster } from "react-hot-toast";
 
 export const metadata = {
   title: "TaskFlow - Task Planner",
@@ -22,13 +12,16 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head><link rel="icon" type="image/svg+xml" href="/logo_icon.svg" /></head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased italic`}
-      >
-        <ContextProvider>
-        <Header/>
-        {children}
-        </ContextProvider>
+      <head>
+        <link rel="icon" type="image/svg+xml" href="/logo_icon.svg" />
+      </head>
+      <body className="antialiased italic bg-[#172842] text-white">
+        <ReduxProvider>
+          <AuthInitializer />
+          <Header />
+          {children}
+          <Toaster />
+        </ReduxProvider>
       </body>
     </html>
   );

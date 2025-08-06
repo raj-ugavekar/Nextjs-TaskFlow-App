@@ -14,29 +14,21 @@ export const useUserContext =()=>{
 export const ContextProvider=({children})=>{
     
     const [user,setUser] = useState({});
+    const [loadingUser, setLoadingUser] = useState(true);
 
     useEffect(() => {
     const controller = new AbortController();
 
     fetch("/api/auth/myprofile", { signal: controller.signal })
         .then((res) => res.json())
-        .then((data) => setUser(data.user))
+        .then((data) => setUser(data.user || null))
+        .finally(() => setLoadingUser(false));
 
     return () => controller.abort();
     }, []);
 
-    useEffect(() => {
-    fetch("/api/auth/myprofile")
-        .then((res) => res.json())
-        .then((data) => {
-        if (data.user?._id) {
-            setUser(data.user);
-        }
-        });
-    }, []);
-
     return (
-        <userContext.Provider value={{user,setUser}}>
+        <userContext.Provider value={{user,setUser,loadingUser}}>
             {children}
             <Toaster/>
         </userContext.Provider>

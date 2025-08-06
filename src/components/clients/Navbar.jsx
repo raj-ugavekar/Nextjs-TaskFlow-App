@@ -1,25 +1,73 @@
 "use client";
 
-import { useMemo, useState } from "react";
 import Link from "next/link";
-import { LogoutBtn } from "./LogoutBtn";
-import { useUserContext } from "./ContextProvider";
 import { usePathname } from "next/navigation";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { getNavItems } from "@/lib/features/clientFeatures";
 import NotificationButton from "./NotificationBtn";
+import { useSelector } from "react-redux";
+import { LogoutButton } from "./Buttons";
 
-export default function MobileNav() {
-  const [isOpen, setIsOpen] = useState(false);
-  const { user } = useUserContext();
+export const DesktopNav=()=> {
+  const user = useSelector((state)=> state.auth.user);
+  const loadingUser = useSelector((state)=> state.auth.loading);
+
   const isLoggedIn = user?._id;
 
   const navItems = useMemo(() => getNavItems(isLoggedIn), [isLoggedIn]);
 
   const pathname = usePathname();
 
+  if (loadingUser) {
+   return null;
+  }
+
   return (
     <>
-    <div className="md:hidden flex gap-4 justify-center items-center">
+    <nav className="hidden md:flex items-center space-x-8">
+      {navItems.map(
+        (item) =>
+          item.active && (
+            <Link
+              key={item.name}
+              href={item.route}
+              className={`hover:text-blue-600 transition-colors font-medium ${pathname === item.route ? "text-blue-400" : ""}`}
+            >
+              {item.name}
+            </Link>
+          )
+      )}
+      {isLoggedIn && <LogoutButton className="hover:text-blue-600 transition-colors font-medium" />}
+      {isLoggedIn && <div><NotificationButton/></div> }
+    </nav>
+    </>
+  );
+}
+
+export const MobileNav =()=> {
+  const [isOpen, setIsOpen] = useState(false);
+  const user = useSelector((state)=> state.auth.user);
+  const isLoggedIn = user?._id;
+
+  const navItems = useMemo(() => getNavItems(isLoggedIn), [isLoggedIn]);
+
+  const pathname = usePathname();
+
+  const menuRef = useRef(null);
+    
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  return (
+    <>
+    <div className="md:hidden flex gap-4 justify-center items-center" ref={menuRef}>
       <div >
       {isLoggedIn && <div><NotificationButton/></div> }
       </div>
@@ -60,7 +108,7 @@ export default function MobileNav() {
               )
           )}
           {isLoggedIn && (
-            <LogoutBtn className="text-white text-left hover:bg-white/10 px-3 py-2 rounded transition" />
+            <LogoutButton className="text-white text-left hover:bg-white/10 px-3 py-2 rounded transition" />
           )}
         </nav>
       </div>
