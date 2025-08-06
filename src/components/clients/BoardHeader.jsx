@@ -140,7 +140,7 @@ export default function BoardHeader({taskBoard}){
             ⋮
           </button>
           {showMenu && (
-            <div className="absolute right-0 mt-2 w-36 bg-[#172842] border border-white/10 rounded-md shadow-lg z-10">
+            <div className="absolute right-0 mt-2 w-24 overflow-hidden overflow-x-auto bg-[#172842] border border-white/10 rounded-md shadow-lg z-10" >
               <button
                 disabled={loading}
                 onClick={handleEditClick}
