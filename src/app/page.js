@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 export default function HomePage() {
-  console.log("Homme Page");
   return (
     <main className="min-h-screen flex flex-col items-center px-4 bg-[#172842] text-white text-center">
 
@@ -43,12 +42,25 @@ export default function HomePage() {
         </div>
       </div>
 
-      <div className="mt-10 text-white/80 text-sm max-w-md">
-        📣 <span className="font-medium">Enable notifications</span> to get task deadline
+      <div className="mt-10 text-white/80 text-sm max-w-md text-center">
+        📣 <span className="font-semibold">Enable notifications</span> to get task deadline
         reminders right on time!
+        <div className="mt-2 text-white/60">
+          <span className="bg-red-500">If notifications are blocked or disabled, follow these steps:</span>
+          <ol className="list-decimal list-inside mt-1 space-y-1">
+            <li>Open your browser settings.</li>
+            <li>Go to <span className="italic">Site Settings</span>.</li>
+            <li>Find and select <span className="italic">Notifications</span>.</li>
+            <li>
+              Search for <span className="font-medium">nextjs-taskflow-app.vercel.app</span> and allow
+              notifications.
+            </li>
+            <li className="bg-red-500">You can also change notification sound and other settings here.</li>
+          </ol>
+        </div>
       </div>
 
-      <footer className="mt-16 py-6 text-xs text-white/40">
+      <footer className="mt-4 py-6 text-xs text-white/40">
         &copy; {new Date().getFullYear()} TaskFlow
       </footer>
     </main>

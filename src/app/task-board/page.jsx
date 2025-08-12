@@ -31,8 +31,8 @@ export default async function BoardListPage() {
   const boards = await getBoards();
 
   return (
-    <div className="max-w-5xl mx-auto">
-      <div className="mb-8 bg-indigo-600 p-6 rounded-lg text-white shadow">
+    <div className="max-w-5xl p-6 shadow mx-auto">
+      <div className="mb-8 rounded-lg text-white  text-center">
         <h1 className="text-3xl font-bold">Your Boards</h1>
         <p className="mt-1 text-white/80">Manage, plan, and execute your tasks efficiently.</p>
       </div>
