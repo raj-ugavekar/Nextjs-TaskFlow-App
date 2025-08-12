@@ -4,8 +4,6 @@ import Column from "./Column";
 
 export default function BoardColumns({boardColumns,tasks}) {
 
-  console.log(boardColumns);
-
   return (
     <>
     <div className="text-end md:hidden">

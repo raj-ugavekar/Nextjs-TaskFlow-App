@@ -264,7 +264,72 @@ export const CreateTaskForm = ({editForm,showForm, closeForm, task }) => {
     setLabels((prev) => prev.filter((label) => label.id !== id));
   };
 
-  const handleSubmit = async () => {
+  const handleAddSubmit = async () => {
+    if (!title.trim()) return toast.error("Please enter a Task Title");
+    if (!description.trim()) return toast.error("Please enter a Task Description");
+    if (!status) return toast.error("Select a Status");
+    if (!priority) return toast.error("Select a Priority");
+    if (!deadlineAt) return toast.error("Select a Deadline");
+
+    const localDate = new Date(deadlineAt);
+    const deadline = localDate.toISOString();
+
+    const taskData = {
+      boardId,
+      columnId,
+      title,
+      description,
+      priority,
+      deadline,
+      labels: labels.filter((l) => l.name.trim() !== "")
+    };
+
+    const toastId = toast.loading("Creating New Task...");
+    setLoading(true);
+
+    try {
+      const res = await fetch("/api/task-board/tasks",{
+        method:"POST",
+        body:JSON.stringify({taskData}),
+        headers:{
+          "Content-Type":"application/json"
+        }
+      })
+
+      if(!res.ok)  return toast.error(res.statusText,{
+        id:toastId
+      });
+    
+      const data = await res.json();
+    
+      if(!data.success) return toast.error(data.message,{
+        id:toastId
+      });
+    
+      setTitle("");
+      setDescription("");   
+      setDeadlineAt("");
+      setPriority("");
+      setStatus("");
+      setLabels([]);
+      closeForm();
+
+      toast.success(data.message,{
+        id:toastId
+      })
+      router.refresh();
+            
+    } catch (error) {
+      return toast.error(error.message,{
+        id:toastId
+      });
+    } finally {
+      setLoading(false);
+    }
+
+  };
+
+  const handleEditSubmit = async () => {
     if (!title.trim()) return toast.error("Please enter a Task Title");
     if (!description.trim()) return toast.error("Please enter a Task Description");
     if (!status) return toast.error("Select a Status");
@@ -285,12 +350,12 @@ export const CreateTaskForm = ({editForm,showForm, closeForm, task }) => {
       labels: labels.filter((l) => l.name.trim() !== "")
     };
 
-    const toastId = toast.loading("Creating New Task...");
+    const toastId = toast.loading("Updating Task...");
     setLoading(true);
 
     try {
-      const res = await fetch("/api/task-board/tasks",{
-        method:"POST",
+      const res = await fetch(`/api/task-board/tasks/task/${task._id}`,{
+        method:"PUT",
         body:JSON.stringify({taskData}),
         headers:{
           "Content-Type":"application/json"
@@ -354,7 +419,8 @@ export const CreateTaskForm = ({editForm,showForm, closeForm, task }) => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
-          <select
+          {
+            !editForm &&  <select
             value={columnId}
             disabled={loading}
             onChange={(e) => {
@@ -375,6 +441,7 @@ export const CreateTaskForm = ({editForm,showForm, closeForm, task }) => {
               </option>
             ))}
           </select>
+          }
           <select
             value={priority}
             disabled={loading}
@@ -435,13 +502,21 @@ export const CreateTaskForm = ({editForm,showForm, closeForm, task }) => {
           >
             Cancel
           </button>
+          {editForm ?  <button
+            disabled={loading}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
+            onClick={handleEditSubmit}
+          >
+            {loading ? "Editing..." : "Edit Task"}
+          </button> :
           <button
             disabled={loading}
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
-            onClick={handleSubmit}
+            onClick={handleAddSubmit}
           >
-            {loading ? (editForm ? "Editing..." :"Creating...") : (editForm ? "Edit Task" :"Create Task")}
+            {loading ? "Creating..." : "Create Task"}
           </button>
+          }
         </div>
       </div>
     </div>
