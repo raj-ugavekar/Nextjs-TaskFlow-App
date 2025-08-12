@@ -39,13 +39,14 @@ export async function GET() {
 
         const payload = JSON.stringify({
           title: `⏰ Taskboard ${taskBoard.name} Reminder`,
-          body: `Task "${task.title}" is due ${timeLabel}`,
-          tag: `task-${todo._id}`,
+          body: `Task "${task.title}" is due ${timeLabel} \nDescription: "${task.description}" \nPriority: "${task.priority}"`,
+          tag: `task-${task._id}`,
         });
 
         try {
           await webpush.sendNotification(user.pushSubscription, payload);
         } catch (err) {
+          console.log(err);
           console.error(`Failed to notify user ${user._id}:`, err?.message);
         }
       }
