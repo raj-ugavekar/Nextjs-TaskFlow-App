@@ -32,7 +32,7 @@ export async function GET() {
       const deadline = new Date(task.deadlineAt);
       const diffMins = Math.floor((deadline - now) / 60000);
 
-      if ([30, 10, 0].includes(diffMins)) {
+      if ([86400,30, 10, 0].includes(diffMins)) {
         const timeLabel = diffMins === 0 ? "now" : `in ${diffMins} minutes`;
 
         const taskBoard = await TaskBoard.findOne({_id:task.boardId, userId: task.userId});
