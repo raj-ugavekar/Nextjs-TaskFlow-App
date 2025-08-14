@@ -12,8 +12,6 @@ export async function POST(request){
 
         const taskData = requestData.taskData;
 
-        console.log(taskData);
-
         if (!taskData.title || !taskData.description || !taskData.status || !taskData.priority || !taskData.deadline) return NextResponse.json({ message: "Please fill All the fields",success: false,status: 400});
 
         const order = taskData.priority === "High" ? 3 : taskData.priority === "Medium" ? 2 : 1;
@@ -35,7 +33,7 @@ export async function POST(request){
         const data = await Tasks.create({title:taskData.title, description: taskData.description, boardId: taskData.boardId , columnId: taskData.columnId, priority: taskData.priority, deadlineAt: taskData.deadline, labels: taskData.labels, createdBy: user._id, status: taskData.status,order:order});
 
         if(!data) return NextResponse.json({ message: "Failed to create Column" , success: false , status: 404 });
-        return NextResponse.json({ taskBoard:taskBoard ,message: "Column Created Succesfully" , success: true , status: 201  });
+        return NextResponse.json({ taskBoard:taskBoard ,message: "Task Created Succesfully" , success: true , status: 201  });
 
     } catch (error) {
         console.log(error);
