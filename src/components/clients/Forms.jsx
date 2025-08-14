@@ -281,6 +281,7 @@ export const CreateTaskForm = ({editForm,showForm, closeForm, task }) => {
       description,
       priority,
       deadline,
+      status,
       labels: labels.filter((l) => l.name.trim() !== "")
     };
 

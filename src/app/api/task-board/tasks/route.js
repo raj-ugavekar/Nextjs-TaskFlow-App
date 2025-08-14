@@ -12,6 +12,8 @@ export async function POST(request){
 
         const taskData = requestData.taskData;
 
+        console.log(taskData);
+
         if (!taskData.title || !taskData.description || !taskData.status || !taskData.priority || !taskData.deadline) return NextResponse.json({ message: "Please fill All the fields",success: false,status: 400});
 
         const order = taskData.priority === "High" ? 3 : taskData.priority === "Medium" ? 2 : 1;
