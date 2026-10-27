@@ -35,7 +35,7 @@ export async function GET() {
       if ([86400,30, 10, 0].includes(diffMins)) {
         const timeLabel = diffMins === 0 ? "now" : `in ${diffMins} minutes`;
 
-        const taskBoard = await TaskBoard.findOne({_id:task.boardId, userId: task.userId});
+        const taskBoard = await TaskBoard.findOne({_id:task.boardId, userId: task.createdBy});
 
         const payload = JSON.stringify({
           title: `⏰ Taskboard ${taskBoard.name} Reminder`,
